@@ -1,35 +1,28 @@
 const express = require("express");
-const excersizeModel = require("../models/excersizeModel");
+const {
+  addExcersize,
+  getExcersises,
+  getExcersise,
+  updateExcersize,
+  deleteExcersize,
+} = require("../controllers/excersizeController");
 
 // create excersize router
 const router = express.Router();
 
 // get all excersizes
-router.get("/", (req, res) => {
-  res.send({ msg: "all excersizes" });
-});
+router.get("/", getExcersises);
+
 // get one excersize
-router.get("/:id", (req, res) => {
-  res.send({ msg: "one excersize" });
-});
+router.get("/:id", getExcersise);
+
 // add excersize
-router.post("/", async (req, res) => {
-  const { title, reps, load } = req.body;
-  try {
-    const excersize = await excersizeModel.create({ title, reps, load });
-    res.status(200).json(excersize);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
+router.post("/", addExcersize);
+
 // edit excersize
-router.patch("/:id", (req, res) => {
-  res.send({ msg: "edit exersize" });
-});
+router.patch("/:id", updateExcersize);
 
 // delete excersize
-router.delete("/:id", (req, res) => {
-  res.send({ msg: "delete excersize" });
-});
+router.delete("/:id", deleteExcersize);
 
 module.exports = router;
